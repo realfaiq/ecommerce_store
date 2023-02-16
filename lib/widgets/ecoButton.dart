@@ -4,10 +4,12 @@ class EcoButton extends StatelessWidget {
   String? title;
   bool isLogIn;
   VoidCallback? onPress;
+  bool? isLoading;
   EcoButton({
     this.title,
     this.isLogIn = false,
     this.onPress,
+    this.isLoading = false,
   });
 
   @override
@@ -23,12 +25,26 @@ class EcoButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.black),
           ),
-          child: Center(
-            child: Text(
-              title ?? 'button',
-              style: TextStyle(
-                  color: isLogIn ? Colors.white : Colors.black, fontSize: 16),
-            ),
+          child: Stack(
+            children: [
+              Visibility(
+                visible: isLoading! ? false : true,
+                child: Center(
+                  child: Text(
+                    title ?? 'button',
+                    style: TextStyle(
+                        color: isLogIn ? Colors.white : Colors.black,
+                        fontSize: 16),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: isLoading!,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            ],
           )),
     );
   }
