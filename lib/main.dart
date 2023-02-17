@@ -1,3 +1,4 @@
+import 'package:ecommerce_store/screens/landing_Screen.dart';
 import 'package:ecommerce_store/screens/login_Screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData(primarySwatch: Colors.blue, backgroundColor: Colors.white),
-      home: const LogInScreen(),
+      home: LandingScreen(),
     );
   }
 }
