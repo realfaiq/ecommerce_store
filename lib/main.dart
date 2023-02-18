@@ -1,5 +1,10 @@
-import 'package:ecommerce_store/screens/landing_Screen.dart';
 import 'package:ecommerce_store/screens/layout_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/add_Product_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/dashboard_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/delete_Product_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/update_Product_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/web_Admin_Login_Screen.dart';
+import 'package:ecommerce_store/screens/web_admin/web_Main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +45,17 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue, backgroundColor: Colors.white),
         home: const LayOutScreen(),
+        routes: {
+          WebAdminLogInScreen.routeName: (context) =>
+              const WebAdminLogInScreen(),
+          WebMainScreen.routeName: (context) => WebMainScreen(),
+          DashBoardScreen.routeName: (context) => const DashBoardScreen(),
+          AddProductScreen.routeName: (context) => AddProductScreen(),
+          UpdateProductScreen.routeName: (context) =>
+              const UpdateProductScreen(),
+          DeleteProductScreen.routeName: (context) =>
+              const DeleteProductScreen(),
+        },
       ),
     );
   }

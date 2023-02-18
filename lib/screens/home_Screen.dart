@@ -1,31 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerce_store/services/firebase_Services.dart';
 import 'package:ecommerce_store/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/homeCards.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final List images = [
     'https://cdn.pixabay.com/photo/2017/12/26/09/15/woman-3040029_960_720.jpg',
     'https://cdn.pixabay.com/photo/2016/11/20/08/58/books-1842261_960_720.jpg',
     'https://cdn.pixabay.com/photo/2016/11/19/11/33/footwear-1838767_960_720.jpg'
   ];
 
-  final List categories = [
+  List categories = [
     "GROCERIES",
     "COSMETICS",
     "ELECTRONICS",
     "PHARMACY",
     "GARMENTS"
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

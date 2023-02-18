@@ -32,7 +32,7 @@ class LandingScreen extends StatelessWidget {
                     if (user == null) {
                       return const LogInScreen();
                     } else {
-                      return const HomeScreen();
+                      return HomeScreen();
                     }
                   }
                   return Scaffold(

@@ -1,27 +1,57 @@
 import 'package:ecommerce_store/screens/web_admin/web_Main.dart';
+import 'package:ecommerce_store/services/firebase_Services.dart';
 import 'package:ecommerce_store/utils/styles.dart';
 import 'package:ecommerce_store/widgets/ecoButton.dart';
+import 'package:ecommerce_store/widgets/ecoDialogue.dart';
 import 'package:ecommerce_store/widgets/textField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class WebAdminLogInScreen extends StatelessWidget {
+class WebAdminLogInScreen extends StatefulWidget {
+  static const String routeName = 'weblogin';
   const WebAdminLogInScreen({super.key});
 
   @override
+  State<WebAdminLogInScreen> createState() => _WebAdminLogInScreenState();
+}
+
+class _WebAdminLogInScreenState extends State<WebAdminLogInScreen> {
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _userNameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
-    String email = 'admin@gmail.com';
-    String password = 'admin123';
-    submit() {
+    bool formStateLoading = false;
+
+    submit() async {
       if (formKey.currentState!.validate()) {
-        if (_emailController.text == email &&
-            _passwordController.text == password) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const WebMainScreen()));
-        }
+        setState(() {
+          formStateLoading = true;
+        });
+        await FirebaseServices.adminSignIn(_userNameController.text)
+            .then((value) async {
+          if (value['username'] == _userNameController.text &&
+              value['password'] == _passwordController.text) {
+            try {
+              UserCredential user =
+                  await FirebaseAuth.instance.signInAnonymously();
+              if (user != null) {
+                Navigator.pushReplacementNamed(
+                    context, WebMainScreen.routeName);
+              }
+            } catch (e) {
+              setState(() {
+                formStateLoading = false;
+              });
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return EcoDialogue(title: e.toString());
+                  });
+            }
+          }
+        });
       }
     }
 
@@ -50,7 +80,7 @@ class WebAdminLogInScreen extends StatelessWidget {
                       style: EcommerceStore.boldStyle,
                     ),
                     EcoTextField(
-                      controller: _emailController,
+                      controller: _userNameController,
                       hintText: 'Email',
                     ),
                     EcoTextField(
@@ -60,7 +90,11 @@ class WebAdminLogInScreen extends StatelessWidget {
                     ),
                     EcoButton(
                       isLogIn: true,
-                      onPress: submit,
+                      title: 'Log In',
+                      isLoading: formStateLoading,
+                      onPress: () {
+                        submit();
+                      },
                     ),
                   ],
                 ),
