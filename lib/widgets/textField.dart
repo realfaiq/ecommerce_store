@@ -6,8 +6,10 @@ class EcoTextField extends StatefulWidget {
   String? Function(String?)? validate;
   bool isPassword;
   Widget? icon;
+  int? maxLines;
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
+
   EcoTextField(
       {this.hintText,
       this.validate,
@@ -15,7 +17,8 @@ class EcoTextField extends StatefulWidget {
       this.textInputAction,
       this.focusNode,
       this.isPassword = false,
-      this.icon});
+      this.icon,
+      this.maxLines});
 
   @override
   State<EcoTextField> createState() => _EcoTextFieldState();
@@ -30,6 +33,7 @@ class _EcoTextFieldState extends State<EcoTextField> {
           color: Colors.grey.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10)),
       child: TextFormField(
+        // maxLines: widget.maxLines == 1 ? 1 : widget.maxLines,
         focusNode: widget.focusNode,
         textInputAction: widget.textInputAction,
         controller: widget.controller,
